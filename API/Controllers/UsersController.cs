@@ -5,18 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+   
+    public class UsersController : BaseController
     {
-    private readonly DataContext _context;
+   
 
-    public UsersController(DataContext context)
+    public UsersController(DataContext context):base(context)
     {
-        _context = context;
     }
      
      [HttpGet]
@@ -24,7 +23,9 @@ namespace API.Controllers
          return await _context.AppUsers.ToListAsync();
      }
      
+     
      [HttpGet("{id}")]
+     [Authorize]
      public async Task<ActionResult<AppUser>> GetUser(int id){
          return await _context.AppUsers.FindAsync(id);
      }
