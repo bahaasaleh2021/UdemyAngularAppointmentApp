@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Subscriber } from 'rxjs';
+import { AccountService } from './_services/account.service';
+
 
 
 @Component({
@@ -15,10 +17,18 @@ export class AppComponent implements OnInit{
   /**
    *
    */
-  constructor(private http:HttpClient) {}
+  constructor(private http:HttpClient,private accountService:AccountService) {
+    
+  }
+
+  populateLocallySavedUser(){
+    var user=localStorage.getItem('user');
+    if(user)
+       this.accountService.setCurrentUser(JSON.parse(user));
+  }
 
   ngOnInit(): void {
-     this.getUsers();
+    this.populateLocallySavedUser();
   }
 
   getUsers(){
