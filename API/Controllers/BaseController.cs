@@ -7,10 +7,6 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class BaseController : ControllerBase
     {
-        public readonly DataContext _context;
-        public BaseController(DataContext context)
-        {
-            _context = context;
-        }
+       
     }
 }

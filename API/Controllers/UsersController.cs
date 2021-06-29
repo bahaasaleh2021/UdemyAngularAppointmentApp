@@ -6,30 +6,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using API.DTO;
 
 namespace API.Controllers
 {
-   
-    public class UsersController : BaseController
-    {
-   
 
-    public UsersController(DataContext context):base(context)
+    public class UsersController:BaseController
     {
-    }
-     
-     [HttpGet]
-     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers(){
-         return await _context.AppUsers.ToListAsync();
-     }
-     
-     
-     [HttpGet("{id}")]
-     [Authorize]
-     public async Task<ActionResult<AppUser>> GetUser(int id){
-         return await _context.AppUsers.FindAsync(id);
-     }
+
+        public IUserRepository _userRepository { get; }
+
+        public UsersController(IUserRepository _userRepository)
+        {
+            this._userRepository = _userRepository;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        {
+            var users=await _userRepository.GetMembersAsync();
+            return users.ToList();
+        }
+
+
+        [HttpGet("{userName}")]
+        [Authorize]
+        public async Task<ActionResult<MemberDto>> GetUser(string userName)
+        {
+            return await _userRepository.GetMemberAsync(userName);
+        }
 
     }
-    
+
 }
