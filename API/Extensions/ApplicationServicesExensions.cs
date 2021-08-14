@@ -1,5 +1,6 @@
 using API.Data;
 using API.Helpers;
+using API.Repositories;
 using API.services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,7 @@ namespace API.Extensions
 
              services.AddScoped<ITokenService, TokenService>();
              services.AddScoped<IUserRepository,UserRepository>();
+
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(_conf.GetConnectionString("DefaultConnection"));

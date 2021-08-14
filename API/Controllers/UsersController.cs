@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using API.DTO;
+using API.Repositories;
 
 namespace API.Controllers
 {
@@ -22,18 +23,18 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembers()
         {
-            var users=await _userRepository.GetMembersAsync();
-            return users.ToList();
+            return Ok(await _userRepository.GetMembersAsync());
+           
         }
 
 
         [HttpGet("{userName}")]
         [Authorize]
-        public async Task<ActionResult<MemberDto>> GetUser(string userName)
+        public async Task<ActionResult<MemberDto>> GetMember(string userName)
         {
-            return await _userRepository.GetMemberAsync(userName);
+            return Ok( await _userRepository.GetMemberAsync(userName));
         }
 
     }
