@@ -17,6 +17,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
+import { MemberCardComponent } from './components/members/member-card/member-card.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import {TabsModule} from 'ngx-bootstrap/tabs';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,8 @@ import { ServerErrorComponent } from './components/server-error/server-error.com
     ListsComponent,
     MessagesComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
@@ -37,13 +42,16 @@ import { ServerErrorComponent } from './components/server-error/server-error.com
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    NgxGalleryModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
       positionClass:"toast-bottom-right"
-    })
+    }),
+    TabsModule.forRoot()
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true}
   ],
   bootstrap: [AppComponent]
 })
