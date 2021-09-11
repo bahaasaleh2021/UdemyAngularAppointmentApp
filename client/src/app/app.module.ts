@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,9 @@ import { MemberCardComponent } from './components/members/member-card/member-car
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { EditMemberComponent } from './components/members/edit-member/edit-member.component';
+import { LoadingIndicatorInterceptor } from './_interceptors/loading-indicator.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     MessagesComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    MemberCardComponent
+    MemberCardComponent,
+    EditMemberComponent
   ],
   imports: [
     BrowserModule,
@@ -43,15 +47,18 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     BrowserAnimationsModule,
     FormsModule,
     NgxGalleryModule,
+    NgxSpinnerModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
       positionClass:"toast-bottom-right"
     }),
     TabsModule.forRoot()
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
-    {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true}
+    {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:LoadingIndicatorInterceptor,multi:true}
   ],
   bootstrap: [AppComponent]
 })

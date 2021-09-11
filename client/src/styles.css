@@ -1,3 +1,5 @@
+@import '~ngx-toastr/toastr.css';
+
 .tab-panel {
     border: 1px solid #ddd;
     padding: 10px;
@@ -43,4 +45,6 @@
     border-top: 1px solid #eee;
     padding: 15px 0;
   }
+
+ 
   

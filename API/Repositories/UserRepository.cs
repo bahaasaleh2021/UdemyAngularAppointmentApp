@@ -21,9 +21,9 @@ namespace API.Repositories
             _db = db;
             _mapper = mapper;
         }
-        public async Task<AppUser> GetUserByIdAsync(int id)
+        public async Task<AppUser> GetUserByUserNameAsync(string userName)
         {
-            return await _db.AppUsers.FindAsync(id);
+            return await _db.AppUsers.FirstOrDefaultAsync(s=>s.UserName==userName);
         }
 
         public async Task<MemberDto> GetMemberAsync(string userName)
