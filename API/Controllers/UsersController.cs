@@ -13,6 +13,7 @@ using AutoMapper;
 using API.Extensions;
 using Microsoft.AspNetCore.Http;
 using API.Interfaces;
+using API.Helpers;
 
 namespace API.Controllers
 {
@@ -32,9 +33,12 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetMembers([FromQuery]RequestParams userParams)
         {
-            return Ok(await _userRepository.GetMembersAsync());
+            var userPagesList=await _userRepository.GetMembersAsync(userParams);
+            Response.AddPaginationHeader(userPagesList.CurrentPage,userPagesList.PageSize,userPagesList.TotalPages,userPagesList.TotalCount);
+            
+            return Ok(userPagesList);
 
         }
 

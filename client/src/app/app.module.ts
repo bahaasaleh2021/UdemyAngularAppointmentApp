@@ -29,6 +29,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { TextInputComponent } from './components/_reusable/text-input/text-input.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import { DateInputComponent } from './components/_reusable/date-input/date-input.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { DateInputComponent } from './components/_reusable/date-input/date-input
     }),
     TabsModule.forRoot(),
     FileUploadModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

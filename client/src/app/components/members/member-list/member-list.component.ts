@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from 'src/app/_models/member';
+import { Pagination } from 'src/app/_models/pagination';
 import { MembersService } from 'src/app/_services/members.service';
 
 @Component({
@@ -8,7 +9,10 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
-members:Member[]|null=null;
+members:Member[];
+pagination:Pagination;
+pageNo=1;
+pageSize=5;
 
   constructor(private service:MembersService) { }
 
@@ -18,7 +22,17 @@ members:Member[]|null=null;
   }
 
   getMembers(){
-    this.service.getMembers().subscribe(mems=>this.members=mems);
+    this.service.getMembers(this.pageNo,this.pageSize).subscribe(response=>{
+      
+      this.members=response.items;
+      this.pagination=response.pagination;
+      console.log(response.pagination);
+    });
+  }
+
+  pageChanged(event:any){
+    this.pageNo=event.page;
+    this.getMembers();
   }
 
 }

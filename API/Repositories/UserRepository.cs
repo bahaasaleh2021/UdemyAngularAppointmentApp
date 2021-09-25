@@ -1,6 +1,7 @@
 ﻿using API.Data;
 using API.DTO;
 using API.Entities;
+using API.Helpers;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -32,9 +33,10 @@ namespace API.Repositories
                             ProjectTo<MemberDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<PagedList<MemberDto>> GetMembersAsync(RequestParams userParams)
         {
-            return await _db.AppUsers.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var query=_db.AppUsers.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking();
+            return await PagedList<MemberDto>.CreateAsync(query,userParams.PageNo,userParams.PageSize);
         }
 
         public async Task<int> SaveAllAsync()
