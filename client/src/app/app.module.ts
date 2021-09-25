@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -24,6 +24,11 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { EditMemberComponent } from './components/members/edit-member/edit-member.component';
 import { LoadingIndicatorInterceptor } from './_interceptors/loading-indicator.interceptor';
+import { EditPhotosComponent } from './components/members/edit-photos/edit-photos.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { TextInputComponent } from './components/_reusable/text-input/text-input.component';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { DateInputComponent } from './components/_reusable/date-input/date-input.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,10 @@ import { LoadingIndicatorInterceptor } from './_interceptors/loading-indicator.i
     NotFoundComponent,
     ServerErrorComponent,
     MemberCardComponent,
-    EditMemberComponent
+    EditMemberComponent,
+    EditPhotosComponent,
+    TextInputComponent,
+    DateInputComponent
   ],
   imports: [
     BrowserModule,
@@ -46,13 +54,16 @@ import { LoadingIndicatorInterceptor } from './_interceptors/loading-indicator.i
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxGalleryModule,
     NgxSpinnerModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
       positionClass:"toast-bottom-right"
     }),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    FileUploadModule,
+    BsDatepickerModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

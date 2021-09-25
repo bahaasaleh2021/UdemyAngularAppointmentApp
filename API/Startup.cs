@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using API.Extensions;
 using API.Middleware;
+using API.Helpers;
 
 namespace API
 {
@@ -34,6 +35,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CloudinarySettings>(_conf.GetSection("Cloudinary"));
             services.AddApplicationServices(_conf);
             services.AddControllers();
             services.AddCors();

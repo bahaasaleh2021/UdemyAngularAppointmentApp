@@ -23,7 +23,7 @@ namespace API.Repositories
         }
         public async Task<AppUser> GetUserByUserNameAsync(string userName)
         {
-            return await _db.AppUsers.FirstOrDefaultAsync(s=>s.UserName==userName);
+            return await _db.AppUsers.Include(s=>s.Photos).FirstOrDefaultAsync(s=>s.UserName==userName);
         }
 
         public async Task<MemberDto> GetMemberAsync(string userName)

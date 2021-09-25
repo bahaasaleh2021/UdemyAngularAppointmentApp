@@ -1,5 +1,6 @@
 using API.Data;
 using API.Helpers;
+using API.Interfaces;
 using API.Repositories;
 using API.services;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace API.Extensions
              services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
              services.AddScoped<ITokenService, TokenService>();
+             services.AddScoped<IPhotoService,PhotoService>();
              services.AddScoped<IUserRepository,UserRepository>();
 
             services.AddDbContext<DataContext>(options =>
