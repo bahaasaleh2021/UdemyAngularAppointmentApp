@@ -12,6 +12,7 @@ namespace API.Repositories
     {
         Task<PagedList<MemberDto>> GetMembersAsync(RequestParams userParams);
         Task<AppUser> GetUserByUserNameAsync(string userName);
+        Task<AppUser> GetUserByUserIdAsync(int userId);
         Task<MemberDto> GetMemberAsync(string userName);
         void Update(AppUser user);
         Task<int> SaveAllAsync();

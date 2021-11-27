@@ -19,6 +19,7 @@ namespace API.Extensions
              services.AddScoped<ITokenService, TokenService>();
              services.AddScoped<IPhotoService,PhotoService>();
              services.AddScoped<IUserRepository,UserRepository>();
+             services.AddScoped<LogUserActivityActionFilter>();
 
             services.AddDbContext<DataContext>(options =>
             {

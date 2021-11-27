@@ -50,7 +50,8 @@ var newUser=_mapper.Map<AppUser>(user);
                 {
                     UserName = user.UserName,
                     Token =_tokenSer.CreateToken(newUser),
-                    KnownAs=user.KnownAs
+                    KnownAs=user.KnownAs,
+                    Gender=user.Gender
                 };
             }
 
@@ -74,7 +75,8 @@ var newUser=_mapper.Map<AppUser>(user);
                     UserName=user.UserName,
                     Token=_tokenSer.CreateToken(existUser),
                     PhotoUrl=existUser.Photos.FirstOrDefault(s=>s.IsMain)?.Url,
-                    KnownAs=existUser.KnownAs
+                    KnownAs=existUser.KnownAs,
+                    Gender=existUser.Gender
                 };
                 
             }

@@ -15,5 +15,11 @@ namespace API.Helpers
          }
 
          public int PageNo { get; set; }=1;
+
+         public string CurrentUser { get; set; }
+         public string Gender { get; set; }
+         public int?     MinAge { get; set; } = 18;
+         public int? MaxAge { get; set; } = 100;
+         public string OrderBy { get; set; }
     }
 }

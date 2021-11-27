@@ -35,8 +35,33 @@ namespace API.Repositories
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(RequestParams userParams)
         {
-            var query=_db.AppUsers.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking();
-            return await PagedList<MemberDto>.CreateAsync(query,userParams.PageNo,userParams.PageSize);
+            var query=_db.AppUsers.AsQueryable();
+
+            if(!string.IsNullOrEmpty(userParams.CurrentUser))
+               query=query.Where(s=>s.UserName!=userParams.CurrentUser);
+
+            if(!string.IsNullOrEmpty(userParams.Gender))
+               query=query.Where(s=>s.Gender==userParams.Gender);
+
+            if(userParams.MaxAge.HasValue){
+                var minDob = DateTime.Today.AddYears(-userParams.MinAge.Value);
+                query=query.Where(s=>s.DateOfBirth<=minDob);
+            }
+
+            if(userParams.MinAge.HasValue){
+                var maxDob=DateTime.Today.AddYears(-userParams.MaxAge.Value);
+                query=query.Where(s=>s.DateOfBirth>=maxDob);
+            }
+
+            query=userParams.OrderBy switch{
+                "created"=>query.OrderByDescending(s=>s.Created),
+                _ =>query.OrderByDescending(x=>x.LastActive)
+            };
+
+            
+            var q=query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking();
+
+            return await PagedList<MemberDto>.CreateAsync(q,userParams.PageNo,userParams.PageSize);
         }
 
         public async Task<int> SaveAllAsync()
@@ -49,6 +74,10 @@ namespace API.Repositories
             _db.Entry(user).State = EntityState.Modified;
         }
 
-        
+        public async Task<AppUser> GetUserByUserIdAsync(int userId)
+        {
+             return await _db.AppUsers.FindAsync(userId);
+
+        }
     }
 }
