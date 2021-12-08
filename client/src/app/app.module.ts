@@ -32,6 +32,7 @@ import { DateInputComponent } from './components/_reusable/date-input/date-input
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from 'ngx-timeago';
+import { MemberMessagesComponent } from './components/members/member-messages/member-messages.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { TimeagoModule } from 'ngx-timeago';
     EditMemberComponent,
     EditPhotosComponent,
     TextInputComponent,
-    DateInputComponent
+    DateInputComponent,
+    MemberMessagesComponent
   ],
   imports: [
     BrowserModule,

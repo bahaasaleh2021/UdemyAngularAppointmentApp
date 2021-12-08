@@ -31,7 +31,7 @@ genderList=[{display:'Male',value:'male'},{display:'Female',value:'female'}];
   getMembers(){
     this.userParams=this.service.getUserParamas();
     this.service.getMembers(this.userParams).subscribe(response=>{
-    
+   
       this.members=response.items;
       this.pagination=response.pagination;
     });

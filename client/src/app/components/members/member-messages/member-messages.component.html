@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="car-body">
+        <div *ngIf="!messages?.length">
+         <h6 class="text-center">No messages Yet ... say Hi by the message box below !</h6>   
+        </div>
+        <ul *ngIf="messages?.length" class="chat">
+           <li *ngFor="let msg of messages">
+               <div>
+                   <span class="chat-img float-right">
+                       <img class="rounded-circle" src="{{msg.senderPhotoUrl || './assets/user.png'}}"
+                       alt="{{msg.senderUserName}}"/>
+                   </span>
+                   <div class="chat-body">
+                       <div class="header">
+                           <small class="text-muted">
+                               <span class="fa fa-clock-o">
+                                   {{msg.dateSent | timeago}}
+                               </span>
+                               <span class="text-danger" 
+                               *ngIf="!msg.dateRead && msg.senderUserName!==userName">
+                                   (unread)
+                               </span>
+                               <span class="text-danger" 
+                               *ngIf="msg.dateRead && msg.senderUserName!==userName">
+                                   (read {{msg.dateSent | timeago}})
+                               </span>
+                           </small>
+                       </div>
+                       <p>{{msg.content}}</p>
+                   </div>
+               </div>
+           </li>
+        </ul>
+    </div>
+    <div class="card-footer">
+        <form #sendForm="ngForm" autocomplete="off">
+<div class="input-group">
+    <input [(ngModel)]="content" name="content" type="text" class="form-control input-sm" placeholder="send private message"/>
+    <div class="input-group-append">
+        <button (click)="sendMessage()" [disabled]="!content" class="btn btn-primary" type="button">Send</button>
+    </div>
+</div>
+        </form>
+    </div>
+</div>

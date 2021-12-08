@@ -8,6 +8,7 @@ import { PagedList } from '../_models/pagination';
 import { User } from '../_models/User';
 import { UserParams } from '../_models/user-params';
 import { AccountService } from './account.service';
+import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -42,18 +43,17 @@ export class MembersService {
   getMembers(userParams:UserParams){
   const key=userParams.getValuesAsString();
   let cachedResult=this.memberCache.get(key);
-  console.log('chached members:',cachedResult);
  if(cachedResult)
     return of(cachedResult);
 
-    var params=this.getPaginationHeaders(userParams.pageNo,userParams.pageSize);
+    var params=getPaginationHeaders(userParams.pageNo,userParams.pageSize);
 
     params=params.append("minage",userParams.minAge.toString());
     params=params.append("maxAge",userParams.maxAge.toString());
     params=params.append("gender",userParams.gender);
     params=params.append("orderBy",userParams.orderBy);
 
-    return this.getPaginatedResult<Member[]>(this.baseUrl + "Users",params).pipe(
+    return getPaginatedResult<Member[]>(this.baseUrl + "Users",params,this.http).pipe(
       map(response=>{
         this.memberCache.set(key,response);
         return response;
@@ -61,29 +61,7 @@ export class MembersService {
     );
   }
 
-  private getPaginatedResult<T>(url:string, params: HttpParams) {
-    const   paginatedResult:PagedList<T>=new PagedList<T>();
 
-    return this.http.get<T>(url, { observe: "response", params }).pipe(
-      map(response => {
-       paginatedResult.items = response.body;
-        if (response.headers.get('Pagination') !== null)
-          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-
-        return paginatedResult;
-      })
-    );
-  }
-
-  getPaginationHeaders(pageNo:number,pageSize:number){
-    let params=new HttpParams();
-    
-    params=params.append("PageNo",pageNo.toString());
-    params=params.append("PageSize",pageSize.toString());
-
-    return params;
-    
-  }
 
   getMember(userName:string){
     //get from cached result

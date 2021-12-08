@@ -3,7 +3,8 @@
     <img src="{{member?.photoUrl}}" class="card-img-top" alt="{{member?.knownAs}}">
     <ul class="list-inline  animate text-center">
         <li class="list-inline-item">
-            <a routerLink="/members/{{member?.userName}}"><img src="assets/images/accountIcon.png" style="width:25px;height:25px;"/></a>
+            <a routerLink="/members/{{member?.userName}}">
+              <img src="assets/images/accountIcon.png" style="width:25px;height:25px;"/></a>
         </li>
 
         <li class="list-inline-item">
@@ -12,7 +13,9 @@
         </li>
 
         <li class="list-inline-item">
-           <a href=""><img src="assets/images/mailIcon.png" style="width:25px;height:25px;"/></a> 
+           <a href="" routerLink="/members/{{member.userName}}"
+           [queryParams]="{tab:3}"
+           ><img  src="assets/images/mailIcon.png" style="width:25px;height:25px;"/></a> 
         </li>
     </ul>
     <div class="card-body p-1">

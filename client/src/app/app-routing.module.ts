@@ -10,6 +10,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ServerErrorComponent } from './components/server-error/server-error.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventLeaveChangedFormGuard } from './_guards/prevent-leave-changed-form.guard';
+import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 
 const routes: Routes = [
 {
@@ -18,7 +19,7 @@ const routes: Routes = [
   children:[
     {path:'',component:HomeComponent},
     {path:'members',component:MemberListComponent},
-    {path:'members/:username',component:MemberDetailsComponent},
+    {path:'members/:userName',component:MemberDetailsComponent,resolve:{member:MemberDetailedResolver}},
     {path:'member/edit',component:EditMemberComponent,canDeactivate:[PreventLeaveChangedFormGuard]},
     {path:'lists',component:ListsComponent},
     {path:'messages',component:MessagesComponent}
